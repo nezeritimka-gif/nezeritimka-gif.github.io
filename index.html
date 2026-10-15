@@ -1,0 +1,276 @@
+
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b160d">
+<title>XAdd-ons — Minecraft Bedrock</title>
+<style>
+:root{--bg:#09120c;--panel:#122218;--line:#2b5034;--green:#62e653;--text:#f3f8f2;--muted:#b8c9bb}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(ellipse at top,#193821,#09120c 65%);color:var(--text);font-family:Arial,sans-serif}
+a{color:inherit;text-decoration:none}
+button,input,textarea,select{font:inherit}
+.wrap{width:min(1160px,calc(100% - 28px));margin:auto}
+header{position:sticky;top:0;z-index:5;background:#08110eee;border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 0}
+.brand{font-size:23px;font-weight:900}
+.brand span{color:var(--green)}
+nav{display:flex;gap:8px;flex-wrap:wrap}
+nav a{padding:10px;border-radius:9px;color:var(--muted)}
+nav a:hover{background:#214729;color:white}
+#menuBtn{display:none;background:#193121;color:white;border:1px solid var(--line);padding:10px;border-radius:9px}
+.hero{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;padding:25px 0}
+.heroMain,.submitTeaser,.panel{border:1px solid var(--line);border-radius:18px;padding:25px;background:linear-gradient(135deg,#244f2d,#102017)}
+.submitTeaser,.panel{background:#101f15}
+h1{font-size:clamp(36px,6vw,64px);line-height:1.05;margin:15px 0}
+h1 span{color:var(--green)}
+p{color:var(--muted);line-height:1.65}
+.btn{display:inline-flex;justify-content:center;align-items:center;padding:12px 16px;border:0;border-radius:9px;font-weight:bold;cursor:pointer;margin:5px 5px 5px 0}
+.primary{background:var(--green);color:#102013}
+.secondary{background:#15291b;border:1px solid var(--line);color:white}
+.checks{line-height:2;color:var(--muted)}
+.checks li::marker{color:var(--green)}
+section{padding:20px 0}
+h2{font-size:26px;margin:0 0 10px}
+.categories{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.cat{padding:14px 5px;background:#0e1c13;color:white;border:1px solid var(--line);border-radius:12px;cursor:pointer}
+.cat b{display:block;margin-top:7px}
+.cat.active{outline:2px solid var(--green);background:#1b3a22}
+.sectionHead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:15px}
+#search{max-width:280px;width:100%;padding:11px;background:#0c1a10;color:white;border:1px solid var(--line);border-radius:9px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.card{background:linear-gradient(145deg,#172b1d,#0e1b12);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.thumb{height:110px;display:grid;place-items:center;background:linear-gradient(135deg,#254e2c,#0c1c12);color:#aaff9c;font-size:23px;font-weight:900;border-bottom:1px solid var(--line)}
+.cardBody{padding:15px}
+.meta{font-size:12px;color:#b9f6a9;display:flex;gap:7px;flex-wrap:wrap}
+.pill{border:1px solid #365d3b;border-radius:99px;padding:4px 8px}
+.card h3{margin:12px 0 7px}
+.card p{font-size:14px;min-height:60px}
+.soon{color:#d4e2d5;font-size:12px}
+.notice{border:1px solid #5c4e27;background:#2a2515;color:#e9dca9;border-radius:10px;padding:13px;font-size:13px;line-height:1.6;margin-top:14px}
+.formGrid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.field{display:flex;flex-direction:column;gap:7px}
+.field.full{grid-column:1/-1}
+.field label{font-weight:bold}
+.field input,.field textarea,.field select{width:100%;background:#09130c;color:white;border:1px solid #35563a;border-radius:9px;padding:12px}
+.field textarea{min-height:100px}
+.field small{color:var(--muted);line-height:1.5}
+.status{display:none;margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:9px;color:#d6f8ce}
+footer{border-top:1px solid var(--line);margin-top:30px;padding:24px 0;color:var(--muted);font-size:13px}
+@media(max-width:800px){.hero{grid-template-columns:1fr}.categories{grid-template-columns:repeat(3,1fr)}.cards{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.bar{flex-wrap:wrap}.brand{font-size:20px}#menuBtn{display:block;margin-left:auto}nav{display:none;width:100%;flex-direction:column}nav.open{display:flex}nav a{background:#102016}.cards{grid-template-columns:1fr}.categories{grid-template-columns:repeat(2,1fr)}.formGrid{grid-template-columns:1fr}.field.full{grid-column:auto}.sectionHead{align-items:stretch;flex-direction:column}#search{max-width:none}}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap bar">
+<a class="brand" href="#home">X<span>Add-ons</span></a>
+<button id="menuBtn" aria-expanded="false">Меню</button>
+<nav id="nav">
+<a href="#home">Главная</a>
+<a href="#catalog">Каталог</a>
+<a href="#publish">Добавить</a>
+<a href="#about">О проекте</a>
+</nav>
+</div>
+</header>
+
+<main class="wrap">
+<section class="hero" id="home">
+<div class="heroMain">
+<div>КАТАЛОГ MINECRAFT BEDROCK</div>
+<h1>Твой мир.<br><span>Твои правила.</span></h1>
+<p>Аддоны, карты, текстуры и шейдеры. Находи интересные проекты и делись своими работами с игроками.</p>
+<a class="btn primary" href="#catalog">Смотреть каталог</a>
+<a class="btn secondary" href="#publish">+ Добавить контент</a>
+</div>
+<aside class="submitTeaser">
+<h2>Добавить контент</h2>
+<p>Подготовь карточку своей работы.</p>
+<ul class="checks">
+<li>Название и описание</li>
+<li>Иконка проекта</li>
+<li>Категория и версия</li>
+<li>Файл на проверку</li>
+</ul>
+<a class="btn primary" href="#publish">+ Добавить</a>
+</aside>
+</section>
+
+<section>
+<div class="categories">
+<button class="cat active" data-filter="Все"><b>Все</b></button>
+<button class="cat" data-filter="Аддоны"><b>Аддоны</b></button>
+<button class="cat" data-filter="Текстуры"><b>Текстуры</b></button>
+<button class="cat" data-filter="Шейдеры"><b>Шейдеры</b></button>
+<button class="cat" data-filter="Карты"><b>Карты</b></button>
+<button class="cat" data-filter="Инструменты"><b>Инструменты</b></button>
+</div>
+</section>
+
+<section id="catalog">
+<div class="sectionHead">
+<div><h2>Каталог XAdd-ons</h2><p>Поиск по названию и описанию.</p></div>
+<input id="search" type="search" placeholder="Поиск...">
+</div>
+
+<div class="cards" id="cards">
+<article class="card" data-category="Аддоны" data-name="Realism Mod RU Realistic Survival">
+<div class="thumb">REALISM</div><div class="cardBody">
+<div class="meta"><span class="pill">Аддон</span><span class="pill">Версию проверить</span></div>
+<h3>Realism Mod RU</h3>
+<p>Реалистичное выживание: жажда, температура, механики выживания и другие улучшения.</p>
+<span class="soon">Файл нужно добавить</span>
+</div></article>
+
+<article class="card" data-category="Аддоны" data-name="Modern Furniture WE">
+<div class="thumb">FURNITURE</div><div class="cardBody">
+<div class="meta"><span class="pill">Аддон</span><span class="pill">Версию проверить</span></div>
+<h3>Modern Furniture WE</h3>
+<p>Мебель, декор и предметы интерьера для оформления дома.</p>
+<span class="soon">Файл нужно добавить</span>
+</div></article>
+
+<article class="card" data-category="Аддоны" data-name="Not Enough Golems">
+<div class="thumb">GOLEMS</div><div class="cardBody">
+<div class="meta"><span class="pill">Аддон</span><span class="pill">Версию проверить</span></div>
+<h3>Not Enough Golems</h3>
+<p>Дополнительные големы с разными особенностями.</p>
+<span class="soon">Файл нужно добавить</span>
+</div></article>
+
+<article class="card" data-category="Аддоны" data-name="The Sift WE">
+<div class="thumb">THE SIFT</div><div class="cardBody">
+<div class="meta"><span class="pill">Аддон</span><span class="pill">Версию проверить</span></div>
+<h3>The Sift WE</h3>
+<p>Инструменты для просеивания и получения ресурсов.</p>
+<span class="soon">Файл нужно добавить</span>
+</div></article>
+
+<article class="card" data-category="Текстуры" data-name="Vanilla Vibrant Visuals">
+<div class="thumb">VISUALS</div><div class="cardBody">
+<div class="meta"><span class="pill">Текстуры</span><span class="pill">Совместимость проверить</span></div>
+<h3>Vanilla Vibrant Visuals</h3>
+<p>Визуальные улучшения и более выразительное освещение.</p>
+<span class="soon">Файл нужно добавить</span>
+</div></article>
+
+<article class="card" data-category="Аддоны" data-name="Actions Stuff">
+<div class="thumb">ANIMATIONS</div><div class="cardBody">
+<div class="meta"><span class="pill">Анимации</span><span class="pill">Версию проверить</span></div>
+<h3>Actions Stuff</h3>
+<p>Пак анимаций для персонажей Minecraft.</p>
+<span class="soon">Файл нужно добавить</span>
+</div></article>
+
+<article class="card" data-category="Инструменты" data-name="Shop and Sell GUI Addon">
+<div class="thumb">SHOP</div><div class="cardBody">
+<div class="meta"><span class="pill">Экономика</span><span class="pill">Версию проверить</span></div>
+<h3>Shop and Sell GUI Addon</h3>
+<p>Проект магазина и продажи предметов через меню.</p>
+<span class="soon">Файл нужно добавить</span>
+</div></article>
+
+<article class="card" data-category="Инструменты" data-name="Money Shop Addon">
+<div class="thumb">ECONOMY</div><div class="cardBody">
+<div class="meta"><span class="pill">Экономика</span><span class="pill">Версию проверить</span></div>
+<h3>Money Shop Addon</h3>
+<p>Проект магазина и игровой валюты.</p>
+<span class="soon">Файл нужно добавить</span>
+</div></article>
+</div>
+<div class="notice">Названия проектов добавлены по твоим прошлым запросам. Файлы не включены, поэтому кнопок скачивания пока нет. Совместимость необходимо проверить отдельно.</div>
+</section>
+
+<section id="publish">
+<div class="panel">
+<h2>+ Добавить контент</h2>
+<p>Заполни все поля. В этой версии форма демонстрационная.</p>
+<form id="submitForm">
+<div class="formGrid">
+<div class="field"><label for="title">Название</label><input id="title" required maxlength="80"></div>
+<div class="field"><label for="category">Категория</label>
+<select id="category"><option>Аддоны</option><option>Карты</option><option>Текстуры</option><option>Шейдеры</option></select></div>
+<div class="field full"><label for="description">Описание</label><textarea id="description" required maxlength="1000"></textarea></div>
+<div class="field"><label for="version">Версия Minecraft</label><input id="version" required placeholder="Например, 26.20–26.52"></div>
+<div class="field"><label for="author">Имя автора</label><input id="author" required maxlength="50"></div>
+<div class="field"><label for="iconFile">Иконка PNG/JPG/WebP</label><input id="iconFile" type="file" accept=".png,.jpg,.jpeg,.webp" required></div>
+<div class="field"><label for="projectFile">Файл проекта</label><input id="projectFile" type="file" accept=".mcaddon,.mcpack,.mcworld,.zip" required><small>Разрешены только MCADDON, MCPACK, MCWORLD и ZIP.</small></div>
+</div>
+<div style="margin-top:15px">
+<button class="btn primary" type="submit">Отправить на проверку</button>
+<button class="btn secondary" type="reset">Очистить</button>
+</div>
+<div class="status" id="formStatus" role="status"></div>
+</form>
+</div>
+<div class="notice">
+Администратор проекта: <b>nezeritimka@gmail.com</b>.<br>
+Это пока статическая страница. Форма не загружает файлы на сервер и не отправляет электронные письма. Для реальной модерации, одобрения и удаления публикаций понадобится серверная часть с защищённым входом администратора.
+</div>
+</section>
+
+<section id="about" class="panel">
+<h2>О XAdd-ons</h2>
+<p>XAdd-ons — фанатский каталог материалов для Minecraft Bedrock. Материалы должны проверяться перед появлением в каталоге. Проект не связан с Mojang или Microsoft.</p>
+</section>
+</main>
+
+<footer><div class="wrap">© 2026 XAdd-ons · Фанатский проект Minecraft Bedrock</div></footer>
+
+<script>
+const menuBtn=document.getElementById('menuBtn');
+const nav=document.getElementById('nav');
+menuBtn.addEventListener('click',()=>{
+ const open=nav.classList.toggle('open');
+ menuBtn.setAttribute('aria-expanded',String(open));
+ menuBtn.textContent=open?'Закрыть':'Меню';
+});
+nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+ nav.classList.remove('open');
+ menuBtn.setAttribute('aria-expanded','false');
+ menuBtn.textContent='Меню';
+}));
+
+let activeFilter='Все';
+document.querySelectorAll('[data-filter]').forEach(btn=>btn.addEventListener('click',()=>{
+ activeFilter=btn.dataset.filter;
+ document.querySelectorAll('[data-filter]').forEach(b=>b.classList.toggle('active',b===btn));
+ filterCards();
+}));
+document.getElementById('search').addEventListener('input',filterCards);
+
+function filterCards(){
+ const q=document.getElementById('search').value.toLowerCase().trim();
+ document.querySelectorAll('#cards .card').forEach(card=>{
+  const catOk=activeFilter==='Все'||card.dataset.category===activeFilter;
+  const textOk=(card.dataset.name+' '+card.innerText).toLowerCase().includes(q);
+  card.style.display=catOk&&textOk?'':'none';
+ });
+}
+
+document.getElementById('submitForm').addEventListener('submit',e=>{
+ e.preventDefault();
+ const f=document.getElementById('projectFile').files[0];
+ const icon=document.getElementById('iconFile').files[0];
+ const status=document.getElementById('formStatus');
+ status.style.display='block';
+ const allowed=['mcaddon','mcpack','mcworld','zip'];
+ const ext=f?f.name.split('.').pop().toLowerCase():'';
+ if(!f||!allowed.includes(ext)){
+  status.textContent='Выбери файл .mcaddon, .mcpack, .mcworld или .zip.';
+  return;
+ }
+ if(!icon){
+  status.textContent='Добавь иконку PNG, JPG или WebP.';
+  return;
+ }
+ status.textContent='Поля заполнены. Это демонстрация: файл не отправлен на сервер и письмо администратору не отправлено. Для реальной проверки нужно подключить сервер и защищённую админ-панель.';
+});
+</script>
+</body>
+  </html>
+  
